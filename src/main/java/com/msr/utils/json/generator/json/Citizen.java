@@ -6,7 +6,6 @@ import java.util.UUID;
 public class Citizen {
     private UUID guid;
     private List<Families> families;
-    //private Families families;
 
 
     public Citizen(UUID guid, List<Families> families) {

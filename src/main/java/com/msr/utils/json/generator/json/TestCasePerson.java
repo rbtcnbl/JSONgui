@@ -1,13 +1,13 @@
 package com.msr.utils.json.generator.json;
 
 
-public class Person {
+public class TestCasePerson {
 
     private String comment;
     private Citizen citizen;
     private String result;
 
-    public Person(String comment, Citizen citizen, String result) {
+    public TestCasePerson(String comment, Citizen citizen, String result) {
         this.comment = comment;
         this.citizen = citizen;
         this.result = result;

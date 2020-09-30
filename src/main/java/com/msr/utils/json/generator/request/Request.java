@@ -10,14 +10,18 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class Request {
     Gson gson = new Gson();
+    private final String url = "http://erl-dev-app-01.msr.lan:8080/uzsfo-validity-processor-test/processor/check";
     private static final Logger log = LoggerFactory.getLogger(Request.class);
+
     public void sendRequest(String json) throws Exception {
-        String url = "http://erl-dev-app-01.msr.lan:8080/uzsfo-validity-processor-test/processor/check";
+
         URL object = new URL(url);
-        byte[] postData = json.getBytes(Charset.forName("UTF-8"));
+        byte[] postData = json.getBytes(StandardCharsets.UTF_8);
+        //byte[] postData = json.getBytes(Charset.forName("UTF-8"));
         int postDataLength = postData.length;
         HttpURLConnection con = (HttpURLConnection) object.openConnection();
         con.setRequestProperty("Content-Type", "application/json");
@@ -33,19 +37,21 @@ public class Request {
 
 
 
-//display what returns the POST request
 
+        //ответ POST
         StringBuilder sb = new StringBuilder();
         int HttpResult = con.getResponseCode();
         if (HttpResult == HttpURLConnection.HTTP_OK) {
             BufferedReader br = new BufferedReader(
-                    new InputStreamReader(con.getInputStream(), "utf-8"));
+                    new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
+            // new InputStreamReader(con.getInputStream(), "utf-8"));
             String line = null;
             while ((line = br.readLine()) != null) {
                 sb.append(line + "\n");
             }
             br.close();
             String response = sb.toString();
+
             try (Writer writer = new FileWriter("1001_test_case_response.json")) {
                 gson = new GsonBuilder().create();
                 gson.toJson(response.replaceAll("\"", ""), writer);
